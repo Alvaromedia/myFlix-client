@@ -6,6 +6,8 @@ import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 
+import './main-view';
+
 export class MainView extends React.Component {
   constructor() {
     super();
@@ -21,10 +23,10 @@ export class MainView extends React.Component {
     // code executed right after the component is added to the DOM
     axios
       .get('https://mxflix.herokuapp.com/movies')
-      .then((response) => {
+      .then(response => {
         this.setState({ movies: response.data });
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   }
@@ -52,13 +54,13 @@ export class MainView extends React.Component {
     const { movies, selectedMovie, user, register } = this.state;
 
     if (!register) {
-      return <RegistrationView onRegistration={(register) => this.onRegistration(register)} />;
+      return <RegistrationView onRegistration={register => this.onRegistration(register)} />;
     }
 
     /* If there is no user, the LoginView is rendered. If there is a user logged in, the user details are passed
      as a prop to the LoginView */
     if (!user) {
-      return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
+      return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
     }
 
     // Before the movies have been loaded
@@ -73,16 +75,16 @@ export class MainView extends React.Component {
         {selectedMovie ? (
           <MovieView
             movie={selectedMovie}
-            onBackClick={(newSelectedMovie) => {
+            onBackClick={newSelectedMovie => {
               this.setSelectedMovie(newSelectedMovie);
             }}
           />
         ) : (
-          movies.map((movie) => (
+          movies.map(movie => (
             <MovieCard
               key={movie._id}
               movie={movie}
-              onMovieClick={(newSelectedMovie) => {
+              onMovieClick={newSelectedMovie => {
                 this.setSelectedMovie(newSelectedMovie);
               }}
             />
