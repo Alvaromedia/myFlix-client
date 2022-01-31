@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import './registration-view';
+import './registration-view.scss';
 
 export function RegistrationView(props) {
   const [username, setUsername] = useState('');
@@ -37,12 +37,12 @@ export function RegistrationView(props) {
   );
 }
 
-RegistrationView.propTypes = {
-  user: PropTypes.shape({
-    username: PropTypes.string.isRequired,
-    password: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    birthday: PropTypes.string.isRequired,
-  }).isRequired,
-  onRegistration: PropTypes.func.isRequired,
-};
+// RegistrationView.propTypes = {
+//   user: PropTypes.shape({
+//     username: PropTypes.string.isRequired,
+//     password: PropTypes.string.isRequired,
+//     email: PropTypes.string.isRequired,
+//     birthday: PropTypes.string.isRequired,
+//   }).isRequired,
+//   onRegistration: PropTypes.func.isRequired,
+// };

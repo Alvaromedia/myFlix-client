@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './movie-view';
+import './movie-view.scss';
 
 export class MovieView extends React.Component {
   keypressCallback(event) {
