@@ -1,4 +1,11 @@
+img {
+  width: 15rem;
+}
 
+.movie-poster {
+  display: flex;
+  justify-content: center;
+}
 
 
 
