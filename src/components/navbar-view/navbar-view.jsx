@@ -15,7 +15,7 @@ export function NavbarView({ user }) {
       return false;
     }
     if (localStorage.getItem('token')) {
-      return localSorage.getItem('token');
+      return localStorage.getItem('token');
     } else {
       return false;
     }
