@@ -1,4 +1,6 @@
 import React from 'react';
+
+// React bootstrap
 import { Col, Row, Card, Button } from 'react-bootstrap';
 
 import './movie-view.scss';
@@ -45,7 +47,7 @@ export class MovieView extends React.Component {
         <Button
           variant="primary"
           onClick={() => {
-            onBackClick(null);
+            onBackClick();
           }}
         >
           Go back

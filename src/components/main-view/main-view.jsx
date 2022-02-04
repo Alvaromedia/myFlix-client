@@ -1,14 +1,21 @@
 import React from 'react';
 import axios from 'axios';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
-import { RegistrationView } from '../registration-view/registration-view';
-import { LoginView } from '../login-view/login-view';
+// React COMPONENTS
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
+import { LoginView } from '../login-view/login-view';
+import { RegistrationView } from '../registration-view/registration-view';
+import { ProfileView } from '../profile-view/profile-view';
+import { GenreView } from '../genre-view/genre-view';
+import { DirectorView } from '../director-view/director-view';
+import { NavbarView } from '../navbar-view/navbar-view';
 
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+// React BOOTSTRAP
+import { Container, Row, Col, Button } from 'react-bootstrap';
 
+// Import scss file
 import './main-view.scss';
 
 export class MainView extends React.Component {
@@ -17,90 +24,202 @@ export class MainView extends React.Component {
     // code executed right when the component is created in the memory
     this.state = {
       movies: [],
-      selectedMovie: null,
       user: null,
     };
   }
 
-  componentDidMount() {
-    // code executed right after the component is added to the DOM
+  getMovies(token) {
     axios
-      .get('https://mxflix.herokuapp.com/movies')
-      .then(response => {
-        this.setState({ movies: response.data });
+      .get('https://mxflix.herokuapp.com/movies', {
+        headers: { Authorization: `Bearer ${token}` },
       })
-      .catch(error => {
+      .then(response => {
+        // Assign the result to the state
+        this.setState({
+          movies: response.data,
+        });
+      })
+      .catch(function (error) {
         console.log(error);
       });
   }
 
-  /* When a movie is clicked this function is invoked and updates the state of the 'selectedMovie' 
-  property to that movie */
-
-  setSelectedMovie(newSelectedMovie) {
-    this.setState({
-      selectedMovie: newSelectedMovie,
-    });
-  }
-
-  onRegistration(register) {
-    this.setState({ register });
+  componentDidMount() {
+    let accessToken = localStorage.getItem('token');
+    if (accessToken !== null) {
+      this.setState({ user: localStorage.getItem('user') });
+      this.getMovies(accessToken);
+    }
   }
 
   // When a user successfully logs in, this function updates the 'user' property in state to that particular user
 
-  onLoggedIn(user) {
-    this.setState({ user });
+  onLoggedIn(authData) {
+    console.log(authData);
+    this.setState({ user: authData.user.Username });
+
+    localStorage.setItem('token', authData.token);
+    localStorage.setItem('user', authData.user.Username);
+    this.getMovies(authData.token);
+  }
+
+  // FIXME:
+  onLoggedOut() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.setState({ user: null });
   }
 
   render() {
-    const { movies, selectedMovie, user, register } = this.state;
-
-    if (!register) {
-      return <RegistrationView onRegistration={register => this.onRegistration(register)} />;
-    }
+    const { movies, user } = this.state;
 
     /* If there is no user, the LoginView is rendered. If there is a user logged in, the user details are passed
      as a prop to the LoginView */
-    if (!user) {
-      return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-    }
-
-    // Before the movies have been loaded
-    if (movies.length === 0) {
-      return <div className="main-view" />;
-    }
 
     return (
-      <div className="main-view">
-        {/* If the state of 'selectedMovie' is not null, that selected movie will be returned otherwise, 
-        all movies will be returned */}
-        {selectedMovie ? (
-          <Row className="justify-content-md-center">
-            <Col md={8}>
-              <MovieView
-                movie={selectedMovie}
-                onBackClick={newSelectedMovie => {
-                  this.setSelectedMovie(newSelectedMovie);
-                }}
-              />
-            </Col>
+      <Router>
+        <NavbarView user={user} />
+        <Container>
+          <Row className="main-view justify-content-md-center">
+            <Route
+              exact
+              path="/"
+              render={() => {
+                if (!user) {
+                  return <Redirect to="/login" />;
+                }
+
+                return (
+                  <>
+                    {movies.map(movie => (
+                      <Col md={3} key={movie._id}>
+                        <MovieCard movie={movie} onMovieClick={() => {}} />
+                      </Col>
+                    ))}
+                  </>
+                );
+              }}
+            />
+            <Route
+              path="/login"
+              render={() => {
+                if (user) {
+                  return <Redirect to="/" />;
+                }
+
+                return <LoginView onLoggedIn={data => this.onLoggedIn(data)} />;
+              }}
+            />
+            <Route
+              path="/register"
+              render={() => {
+                if (user) {
+                  return <Redirect to="/" />;
+                }
+
+                return (
+                  <Col>
+                    <RegistrationView />
+                  </Col>
+                );
+              }}
+            />
+            <Route
+              path="/movies/:title"
+              render={({ match, history }) => {
+                if (!user) {
+                  return (
+                    <Col>
+                      <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+                    </Col>
+                  );
+                }
+
+                if (movies.length === 0) {
+                  return <div className="main-view" />;
+                }
+
+                return (
+                  <Col md={8}>
+                    <MovieView
+                      movie={movies.find(m => m._id === match.params.title)}
+                      onBackClick={() => history.goBack()}
+                    />
+                  </Col>
+                );
+              }}
+            />
+            <Route
+              path="/profile"
+              render={({ history }) => {
+                if (!user) {
+                  return (
+                    <Col>
+                      <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+                    </Col>
+                  );
+                }
+
+                return (
+                  <Col md={8}>
+                    <ProfileView movies={movies} onBackClick={() => history.goBack()} />
+                  </Col>
+                );
+              }}
+            />
+            <Route
+              path="/genres/:name"
+              render={({ match, history }) => {
+                if (!user) {
+                  return (
+                    <Col>
+                      <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+                    </Col>
+                  );
+                }
+
+                if (movies.length === 0) {
+                  return <div className="main-view" />;
+                }
+
+                return (
+                  <Col md={8}>
+                    <GenreView
+                      genre={movies.find(m => m.Genre.Name === match.params.name).Genre}
+                      onBackClick={() => history.goBack()}
+                      movies={movies.filter(movie => movie.Genre.Name === match.params.name)}
+                    />
+                  </Col>
+                );
+              }}
+            />
+            <Route
+              path="/directors/:name"
+              render={({ match, history }) => {
+                if (!user) {
+                  return (
+                    <Col>
+                      <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+                    </Col>
+                  );
+                }
+
+                if (movies.length === 0) return <div className="main-view" />;
+
+                return (
+                  <Col md={8}>
+                    <DirectorView
+                      director={movies.find(m => m.Director.Name === match.params.name).Director}
+                      onBackClick={() => history.goBack()}
+                      movies={movies.filter(movie => movie.Director.Name === match.params.name)}
+                    />
+                  </Col>
+                );
+              }}
+            />
           </Row>
-        ) : (
-          <Row className="justify-content-md-center">
-            {movies.map(movie => (
-              <Col md={3} key={movie._id}>
-                <MovieCard
-                  movie={movie}
-                  onMovieClick={newSelectedMovie => {
-                    this.setSelectedMovie(newSelectedMovie);
-                  }}
-                />
-              </Col>
-            ))}
-          </Row>
-        )}
-      </div>
+        </Container>
+      </Router>
     );
   }
 }
