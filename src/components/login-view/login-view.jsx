@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-// import PropTypes from 'propTypes';
-
-// React bootstrap
 import { Button, Form } from 'react-bootstrap';
-
+import axios from 'axios';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import './login-view.scss';
@@ -24,11 +21,11 @@ export function LoginView(props) {
       setUsernameErr('Username is required');
       isReq = false;
     } else if (username.length < 2) {
-      setUsernameErr('Username must be longer than two characters');
+      setUsernameErr('Username must be at least two characters long');
       isReq = false;
     }
     if (!password) {
-      setPasswordErr('Password required');
+      setPasswordErr('Password is required');
       isReq = false;
     } else if (password.length < 6) {
       setPassword('Password must be at least 6 characters long');
@@ -51,7 +48,7 @@ export function LoginView(props) {
           const data = response.data;
           props.onLoggedIn(data);
         })
-        .catch(err => {
+        .catch(e => {
           console.log('No such user');
         });
     }
@@ -71,7 +68,7 @@ export function LoginView(props) {
         {usernameErr && <p>{usernameErr}</p>}
       </Form.Group>
 
-      <Form.Group>
+      <Form.Group controlId="formPassword">
         <Form.Label>Password: </Form.Label>
         <Form.Control
           type="password"
@@ -85,11 +82,11 @@ export function LoginView(props) {
       <Button variant="primary" type="submit" onClick={handleSubmit}>
         Submit
       </Button>
-      <Link to="/register">
+      {/* <Link to="/register">
         <Button variant="primary" type="submit">
           Register
         </Button>
-      </Link>
+      </Link> */}
     </Form>
   );
 }

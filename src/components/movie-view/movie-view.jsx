@@ -1,8 +1,6 @@
 import React from 'react';
-
-// React bootstrap
-import { Col, Row, Card, Button } from 'react-bootstrap';
-
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import './movie-view.scss';
 
 export class MovieView extends React.Component {
@@ -12,7 +10,6 @@ export class MovieView extends React.Component {
 
   render() {
     const { movie, onBackClick } = this.props;
-    const { Name, Bio, Birth, Death } = movie.Director;
 
     return (
       <div className="movie-view mt-4">
@@ -32,10 +29,10 @@ export class MovieView extends React.Component {
 
         <div className="movie-director mb-4">
           <div className="label">Director: </div>
-          <div className="value pl-4">Name: {Name}</div>
-          <div className="value pl-4">Bio: {Bio}</div>
-          <div className="value pl-4">Birth: {Birth}</div>
-          <div className="value pl-4">Death: {Death}</div>
+          <div className="value pl-4">Name: {movie.Director.Name}</div>
+          <div className="value pl-4">Bio: {movie.Director.Bio}</div>
+          <div className="value pl-4">Birth: {movie.Director.Birth}</div>
+          <div className="value pl-4">Death: {movie.Director.Death}</div>
         </div>
 
         <div className="movie-genre mb-4">

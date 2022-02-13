@@ -1,6 +1,6 @@
 import React from 'react';
-
-import { Container, Row, Card, Button, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Container, Card, Button } from 'react-bootstrap';
 
 export class DirectorView extends React.Component {
   render() {

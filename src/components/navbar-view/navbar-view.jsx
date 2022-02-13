@@ -1,4 +1,3 @@
-// Import React and export function to use in the MainView
 import React from 'react';
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
 
@@ -23,7 +22,13 @@ export function NavbarView({ user }) {
 
   // Unordered list begins
   return (
-    <Navbar className="main-nav" sticky="top" bg="dark" expand="lg" variant="dark">
+    <Navbar
+      className="main-nav"
+      sticky="top"
+      bg="dark"
+      expand="lg"
+      variant="dark"
+    >
       <Container>
         <Navbar.Brand className="navbar-logo" href="/">
           MyFlix
@@ -37,14 +42,14 @@ export function NavbarView({ user }) {
               <Button
                 variant="link"
                 onClick={() => {
-                  this.onLoggedOut();
+                  onLoggedOut();
                 }}
               >
                 Logout
               </Button>
             )}
             {!isAuth() && <Nav.Link href="/">Sign In</Nav.Link>}
-            {!isAuth() && <Nav.Link href="/register">Sign Out</Nav.Link>}
+            {!isAuth() && <Nav.Link href="/register">Register</Nav.Link>}
           </Nav>
         </Navbar.Collapse>
       </Container>

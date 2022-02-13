@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Row, Card, Button, Col } from 'react-bootstrap';
+import { Container, Card, Button } from 'react-bootstrap';
 
-export default class GenreView extends React.Component {
+export class GenreView extends React.Component {
   render() {
     const { genre, onBackClick } = this.props;
 
@@ -11,7 +11,7 @@ export default class GenreView extends React.Component {
         <Card>
           <Card.Body>
             <Card.Title>Genre</Card.Title>
-            <div className="movie-genre">
+            <div className="genre-name">
               <span className="label">Name: </span>
               <span className="value">{genre.Name}</span>
             </div>
