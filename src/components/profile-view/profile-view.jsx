@@ -32,7 +32,7 @@ export class ProfileView extends React.Component {
   getUser(token) {
     const user = localStorage.getItem('user');
     axios
-      .get(`http://mxflix.herokuapp.com/users/${user}`, {
+      .get(`https://mxflix.herokuapp.com/users/${user}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => {
