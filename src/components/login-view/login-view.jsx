@@ -34,8 +34,8 @@ export function LoginView(props) {
     return isReq;
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
+  const handleSubmit = event => {
+    event.preventDefault();
     const isReq = validate();
     if (isReq) {
       //  Send a request to the server for authentication
