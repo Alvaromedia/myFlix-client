@@ -29,6 +29,28 @@ export class ProfileView extends React.Component {
       window.open('/', '_self');
   }
 
+  removeFavourite = (event, movie) => {
+    event.preventDefault();
+    const Username = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+
+    axios
+      .delete(
+        `https://mxflix.herokuapp.com/users/${Username}/movies/${movie._id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then(response => {
+        console.log(response);
+        alert('Movie removed');
+        this.componentDidMount();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   getUser(token) {
     const user = localStorage.getItem('user');
     axios
@@ -49,8 +71,8 @@ export class ProfileView extends React.Component {
       });
   }
 
-  updateUser(e) {
-    e.preventDefault();
+  updateUser(event) {
+    event.preventDefault();
     const user = localStorage.getItem('user');
     const token = localStorage.getItem('token');
 
@@ -125,7 +147,7 @@ export class ProfileView extends React.Component {
 
   render() {
     const { movies, onBackClick } = this.props;
-    const { FavouriteMovies, Username, Email, Birthday } = this.state;
+    const { Username, Password, Email, Birthday, FavouriteMovies } = this.state;
 
     if (!Username) {
       return null;
@@ -219,6 +241,7 @@ export class ProfileView extends React.Component {
 
         <div className="backButton">
           <Button
+            style={{ width: '100%' }}
             variant="primary"
             onClick={() => {
               onBackClick();
@@ -227,6 +250,49 @@ export class ProfileView extends React.Component {
             Back
           </Button>
         </div>
+
+        {/* TODO:  */}
+        <Row>
+          <Col style={{ margin: '10px' }}>
+            <h4>{Username}'s favourite movies</h4>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Card.Body>
+              {FavouriteMovies.length === 0 && (
+                <div className="text-center">This list is empty</div>
+              )}
+              <Row>
+                {FavouriteMovies.length > 0 &&
+                  movies.map(movie => {
+                    if (
+                      movie._id ===
+                      FavouriteMovies.find(
+                        favouriteM => favouriteM === movie._id
+                      )
+                    ) {
+                      return (
+                        <Card key={movie._id}>
+                          <Card.Img src={movie.ImagePath} />
+                          <Card.Body>
+                            <Card.Title>{movie.Title}</Card.Title>
+                            <Button
+                              variant="primary"
+                              value={movie._id}
+                              onClick={e => this.removeFavourite(e, movie)}
+                            >
+                              Remove
+                            </Button>
+                          </Card.Body>
+                        </Card>
+                      );
+                    }
+                  })}
+              </Row>
+            </Card.Body>
+          </Col>
+        </Row>
       </Container>
     );
   }
