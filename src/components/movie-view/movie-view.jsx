@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './movie-view.scss';
@@ -7,6 +8,27 @@ export class MovieView extends React.Component {
   keypressCallback(event) {
     console.log(event.key);
   }
+
+  addFavourite = (event, movie) => {
+    event.preventDefault();
+    const Username = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+
+    axios
+      .post(
+        `https://mxflix.herokuapp.com/users/${Username}/movies/${movie._id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then(response => {
+        console.log(response);
+        alert('Movie added to favourites');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   render() {
     const { movie, onBackClick } = this.props;
@@ -40,6 +62,14 @@ export class MovieView extends React.Component {
           <div className="value pl-4">{movie.Genre.Name}</div>
           <div className="value pl-4">{movie.Genre.Description}</div>
         </div>
+
+        <Button
+          variant="secondary"
+          value={movie._id}
+          onClick={e => this.addFavourite(e, movie)}
+        >
+          Add to favourites
+        </Button>
 
         <Button
           variant="primary"
