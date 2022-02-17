@@ -53,8 +53,8 @@ export function RegistrationView(props) {
     return isReq;
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
+  const handleSubmit = event => {
+    event.preventDefault();
     const isReq = validate();
     if (isReq) {
       console.log(username, password, email, birthday);

@@ -137,7 +137,7 @@ export class MainView extends React.Component {
             />
             <Route
               path="/directors/:name"
-              render={({ match }) => {
+              render={({ history, match }) => {
                 if (movies.length === 0) return <div className="main-view" />;
                 return (
                   <Col md={8}>
@@ -156,7 +156,7 @@ export class MainView extends React.Component {
 
             <Route
               path="/genres/:genre"
-              render={({ match }) => {
+              render={({ history, match }) => {
                 if (movies.length === 0) return <div className="main-view" />;
                 return (
                   <Col md={8}>
