@@ -17,6 +17,7 @@ export class MovieView extends React.Component {
     axios
       .post(
         `https://mxflix.herokuapp.com/users/${Username}/movies/${movie._id}`,
+        {},
         {
           headers: { Authorization: `Bearer ${token}` },
         }

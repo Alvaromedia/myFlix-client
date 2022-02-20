@@ -178,7 +178,7 @@ export class ProfileView extends React.Component {
                       type="text"
                       name="Username"
                       placeholder="New Username"
-                      value={''}
+                      value={this.state.Username}
                       onChange={e => this.setUsername(e.target.value)}
                       required
                     />
@@ -190,7 +190,7 @@ export class ProfileView extends React.Component {
                       type="password"
                       name="Password"
                       placeholder="New Password"
-                      value={''}
+                      value={this.state.Password}
                       onChange={e => this.setPassword(e.target.value)}
                       required
                     />
@@ -202,7 +202,7 @@ export class ProfileView extends React.Component {
                       type="email"
                       name="Email"
                       placeholder="New Email"
-                      value={''}
+                      value={this.state.Email}
                       onChange={e => this.setEmail(e.target.value)}
                       required
                     />
@@ -213,7 +213,7 @@ export class ProfileView extends React.Component {
                     <Form.Control
                       type="date"
                       name="Birthday"
-                      value={''}
+                      value={this.state.Birthday}
                       onChange={e => this.setBirthday(e.target.value)}
                     />
                   </Form.Group>
