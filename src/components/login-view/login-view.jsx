@@ -82,11 +82,11 @@ export function LoginView(props) {
       <Button variant="primary" type="submit" onClick={handleSubmit}>
         Submit
       </Button>
-      {/* <Link to="/register">
+      <Link to="/register">
         <Button variant="primary" type="submit">
           Register
         </Button>
-      </Link> */}
+      </Link>
     </Form>
   );
 }

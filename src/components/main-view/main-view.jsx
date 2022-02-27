@@ -1,8 +1,22 @@
 import React from 'react';
 import axios from 'axios';
+
+import { connect } from 'react-redux';
+
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
-import { MovieCard } from '../movie-card/movie-card';
+// #0
+import { setMovies, setUser } from '../../actions/actions';
+
+// We haven't written this one yet
+import MoviesList from '../movies-list/movies-list';
+
+/* 
+  #1 The rest of components import statements but without the MovieCard's 
+  because it will be imported and used in the MoviesList component rather
+  than in here. 
+*/
+
 import { MovieView } from '../movie-view/movie-view';
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
@@ -15,12 +29,12 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 import './main-view.scss';
 
-export class MainView extends React.Component {
+// #2 'export' keyword removed from here
+class MainView extends React.Component {
   constructor() {
     super();
-    // code executed right when the component is created in the memory
+    // #3 movies state removed from here
     this.state = {
-      movies: [],
       user: null,
     };
   }
@@ -28,7 +42,7 @@ export class MainView extends React.Component {
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
-      this.setState({ user: localStorage.getItem('user') });
+      this.props.setUser(localStorage.getItem('user'));
       this.getMovies(accessToken);
     }
   }
@@ -39,10 +53,8 @@ export class MainView extends React.Component {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => {
-        // Assign the result to the state
-        this.setState({
-          movies: response.data,
-        });
+        // #4
+        this.props.setMovies(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -53,7 +65,7 @@ export class MainView extends React.Component {
 
   onLoggedIn(authData) {
     console.log(authData);
-    this.setState({ user: authData.user.Username });
+    this.props.setUser(authData.user.Username);
 
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
@@ -61,7 +73,9 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, user } = this.state;
+    // #5 movies is extracted from this.props rather than from this.state
+    let { movies } = this.props;
+    let { user } = this.props;
 
     return (
       <Router>
@@ -72,7 +86,6 @@ export class MainView extends React.Component {
               exact
               path="/"
               render={() => {
-                /* If there is no user, the LoginView is rendered. If there is a user logged in, the user details are passed as a prop to the LoginView */
                 if (!user) {
                   return (
                     <Col>
@@ -87,12 +100,8 @@ export class MainView extends React.Component {
                 if (movies.length === 0) {
                   return <div className="main-view" />;
                 }
-
-                return movies.map(movie => (
-                  <Col md={3} key={movie._id}>
-                    <MovieCard movie={movie} />
-                  </Col>
-                ));
+                // #6
+                return <MoviesList movies={movies} />;
               }}
             />
 
@@ -195,3 +204,14 @@ export class MainView extends React.Component {
     );
   }
 }
+
+// #7
+let mapStateToProps = state => {
+  return { movies: state.movies, user: state.user };
+};
+
+// #8
+export default connect(mapStateToProps, { setMovies, setUser })(MainView);
+
+/* Below is the connect function’s API:
+function connect(mapStateToProps?, mapDispatchToProps?, mergeProps?, options?) */

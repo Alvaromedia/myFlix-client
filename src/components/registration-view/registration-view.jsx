@@ -94,7 +94,7 @@ export function RegistrationView(props) {
             {values.usernameErr && <p>{values.usernameErr}</p>}
           </Form.Group>
 
-          <Form.Group constrolId="formPassword" className="reg-form-inputs">
+          <Form.Group controlId="formPassword" className="reg-form-inputs">
             <Form.Label>Password: </Form.Label>
             <Form.Control
               type="password"

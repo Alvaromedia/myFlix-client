@@ -21,13 +21,13 @@ export class ProfileView extends React.Component {
     this.getUser(accessToken);
   }
 
-  onLoggedOut() {
-    localStorage.clear();
-    this.setState({
-      user: null,
-    }),
-      window.open('/', '_self');
-  }
+  // onLoggedOut() {
+  //   localStorage.clear();
+  //   this.setState({
+  //     user: null,
+  //   }),
+  //     window.open('/', '_self');
+  // }
 
   removeFavourite = (event, movie) => {
     event.preventDefault();
@@ -251,7 +251,6 @@ export class ProfileView extends React.Component {
           </Button>
         </div>
 
-        {/* TODO:  */}
         <Row>
           <Col style={{ margin: '10px' }}>
             <h4>{Username}'s favourite movies</h4>
