@@ -4,7 +4,8 @@
   "description": "",
   "default": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "parcel src/index.html --public-url /"
   },
   "repository": {
     "type": "git",
@@ -26,7 +27,9 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "^5.2.0",
     "redux": "^4.1.2",
-    "redux-devtools-extension": "^2.13.9",
+    "redux-devtools-extension": "^2.13.9"
+  },
+  "devDependencies": {
     "@parcel/transformer-sass": "^2.0.0-rc.0"
   }
 }
