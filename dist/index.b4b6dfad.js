@@ -33893,6 +33893,7 @@ function LoginView(props) {
             props.onLoggedIn(data);
         }).catch((e)=>{
             console.log('No such user');
+            alert('An error ocurred trying to log-in');
         });
     };
     return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form, {
@@ -33904,7 +33905,7 @@ function LoginView(props) {
                         children: "Username: "
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 60,
+                        lineNumber: 61,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
@@ -33914,20 +33915,20 @@ function LoginView(props) {
                         onChange: (e)=>setUsername(e.target.value)
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 61,
+                        lineNumber: 62,
                         columnNumber: 9
                     }, this),
                     usernameErr && /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
                         children: usernameErr
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 68,
+                        lineNumber: 69,
                         columnNumber: 25
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 59,
+                lineNumber: 60,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Group, {
@@ -33937,7 +33938,7 @@ function LoginView(props) {
                         children: "Password: "
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 72,
+                        lineNumber: 73,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
@@ -33947,20 +33948,20 @@ function LoginView(props) {
                         onChange: (e)=>setPassword(e.target.value)
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 73,
+                        lineNumber: 74,
                         columnNumber: 9
                     }, this),
                     passwordErr && /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
                         children: passwordErr
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 80,
+                        lineNumber: 81,
                         columnNumber: 25
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 71,
+                lineNumber: 72,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Button, {
@@ -33970,7 +33971,7 @@ function LoginView(props) {
                 children: "Submit"
             }, void 0, false, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 82,
+                lineNumber: 83,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactRouterDom.Link, {
@@ -33981,18 +33982,18 @@ function LoginView(props) {
                     children: "Register"
                 }, void 0, false, {
                     fileName: "src/components/login-view/login-view.jsx",
-                    lineNumber: 86,
+                    lineNumber: 87,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 85,
+                lineNumber: 86,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/components/login-view/login-view.jsx",
-        lineNumber: 58,
+        lineNumber: 59,
         columnNumber: 5
     }, this));
 }

@@ -50,6 +50,7 @@ export function LoginView(props) {
         })
         .catch(e => {
           console.log('No such user');
+          alert('An error ocurred trying to log-in');
         });
     }
   };
