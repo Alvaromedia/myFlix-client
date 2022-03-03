@@ -7,3 +7,5 @@ This is the client-side counter-part application of my movie API. This applicati
 3. Let registered users to add movies to their favourites list
 4. Let registered useres to update their data
 5. Let users to delete their profile
+
+https://myflixsite.netlify.app/
